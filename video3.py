@@ -10,4 +10,6 @@ response = requests.get("https://api.github.com/search/repositories", params = p
 
 #Будем выводит то, что получили
 response_json = response.json()
-pprint.pprint(response_json)
+#pprint.pprint(response_json)
+
+print(f"количество репозиториев с js: {response_json['total_count']}" )
