@@ -1,3 +1,4 @@
+#ешё - про структуру ответа на get-запрос
 import requests
 response = requests.get("https://google.com")
 

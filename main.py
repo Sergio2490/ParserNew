@@ -1,3 +1,4 @@
+#get-запрос
 import requests
 import pprint
 response = requests.get("https://api.github.com")
