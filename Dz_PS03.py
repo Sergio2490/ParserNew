@@ -1,3 +1,7 @@
+# Сейчас игра получает английское слово и английское определение. Сделайте так, чтобы слова
+# и определения этих слов были на русском. Для этого понадобится модуль googletrans
+# именно версии 3.1.0a0
+
 import requests
 from bs4 import BeautifulSoup
 from googletrans import Translator
