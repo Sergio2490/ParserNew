@@ -18,6 +18,7 @@ import random
 browser = webdriver.Firefox()
 browser.get("https://ru.wikipedia.org/wiki/Заглавная_страница")
 answer = input("Введите запрос, для поиска информаци в Википедии: ")
+answer = answer.capitalize()
 
 assert "Википедия" in browser.title  # Проверка на наличие заголовка "Википедия" в теге <title>Википедия
 time.sleep(3)
@@ -35,8 +36,13 @@ a.click()
 #выводим меню из 3-х пунктов
 user_choice = input("Выберите дальнейшие действия: \n1 - листать параграфы текущей статьи (по Enter)\n2 - перейти на одну из связанных страниц (рандомно)\n3 - выйти из программы")
 if user_choice =="1":
-    pass
+    paragraphs = browser.find_elements(By.TAG_NAME, "p")
+    for paragraph in paragraphs:
+        print(paragraph.text)
+        br = input()
+        if br == "3":
+            exit()
 elif user_choice == "2":
     pass
 elif user_choice == "3":
-    browser.quit()
+    exit()
