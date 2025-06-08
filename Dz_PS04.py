@@ -60,17 +60,18 @@ def second_point():
                 exit()
     elif user_choice1 == "2":
         #Здесь нам нужно внутри уже открытой ранее(перед if) статьи перейти по пункту меню на случайную внутреннюю статью
-        contents = []  #список элементов внутренних статей
+        #contents = []  #список элементов внутренних статей
         #for element in browser.find_elements(By.TAG_NAME, "div"):
         #        el = element.get_attribute("class")
         #        if el == "toctitle":
         #            contents.append(element)
         #print(f"Это список с пунктами меню: ", contents)
-
+        contents =[]
         contents = browser.find_elements(By.CSS_SELECTOR, "#mw-content-text a")
         random_link = random.choice(contents)
         link = random_link.get_attribute("href")
         browser.get(link)
+        #print(link)
 
         #Сейчас выбираем случайный элемент списка(пункт содержание)
         #content = random.choice(contents)
