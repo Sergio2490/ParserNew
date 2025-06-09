@@ -14,6 +14,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 import time
 import random
+from selenium.common.exceptions import NoSuchElementException
 
 browser = webdriver.Firefox()
 browser.get("https://ru.wikipedia.org/wiki/Заглавная_страница")
@@ -60,25 +61,22 @@ def second_point():
                 exit()
     elif user_choice1 == "2":
         #Здесь нам нужно внутри уже открытой ранее(перед if) статьи перейти по пункту меню на случайную внутреннюю статью
-        #contents = []  #список элементов внутренних статей
-        #for element in browser.find_elements(By.TAG_NAME, "div"):
-        #        el = element.get_attribute("class")
-        #        if el == "toctitle":
-        #            contents.append(element)
-        #print(f"Это список с пунктами меню: ", contents)
-        contents =[]
-        contents = browser.find_elements(By.CSS_SELECTOR, "#mw-content-text a")
-        random_link = random.choice(contents)
-        link = random_link.get_attribute("href")
-        browser.get(link)
-        #print(link)
+        # Пробуем найти блок содержания
+        try:
+            toc = browser.find_element(By.ID, "toc")  # Находим блок Содержание
+            links = toc.find_elements(By.TAG_NAME, "a")  # Все якорные ссылки
 
-        #Сейчас выбираем случайный элемент списка(пункт содержание)
-        #content = random.choice(contents)
-        #link = content.find_element(By.TAG_NAME, "a").get_attribute("href")
-        #browser.get(link)
-        #print(link.text)
+            if not links:
+                print("В разделе содержания нет пунктов.")
+                return
 
+            random_link = random.choice(links)  # случайный пункт меню
+            #href = random_link.get_attribute("href")
+            random_link.click()  # Скроллим к нужному разделу
+            time.sleep(1)
+
+        except NoSuchElementException:
+            print("На этой странице нет содержания (раздела с id='toc').")
     return
 
 
