@@ -16,10 +16,24 @@ parsed_data = []  # далее б сохр все в этом списке
 
 for vacancy in vacancies:  #каждая отдел вакансия - in Коллекция карточек вакансий
     try:   #б ловить ошибки, если будут
-        title = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="serp-item__title-text"]')  # Имя вакансии
-        company = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="vacancy-serp__vacancy-employer-text"]')  #Название компании
-        salary = vacancy.find_element(By.CSS_SELECTOR, 'span.magritte-text___pbpft_3-0-47')
+        title = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="serp-item__title-text"]').text  # Имя вакансии
+        company = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="vacancy-serp__vacancy-employer-text"]').text  #Название компании
+        #salary = vacancy.find_element(By.CSS_SELECTOR, 'span.magritte-text___pbpft_3-0-47').text
+        salary_elem = vacancy.find_element(By.XPATH, './/span[contains(@class, "magritte-text___pbpft") and contains(text(), "₽")]')
+        salary = salary_elem.text
         link = vacancy.find_element(By.CSS_SELECTOR, 'a.magritte-link___b4rEM_5-0-28').get_attribute('href')
-        
+    except:
+        print("произошла ошибка парсинга")
+        continue
+
+    parsed_data.append([title, company, salary, link])
+
+with open("hh.csv", "w", newline='', encoding="utf-8") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Название вакансии", "название компании", "зарплата", "ссылка на вакансию"])
+    writer.writerows(parsed_data)
+
+
+
 
 
