@@ -19,8 +19,15 @@ for vacancy in vacancies:  #каждая отдел вакансия - in Кол
         title = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="serp-item__title-text"]').text  # Имя вакансии
         company = vacancy.find_element(By.CSS_SELECTOR,  'span[data-qa="vacancy-serp__vacancy-employer-text"]').text  #Название компании
         #salary = vacancy.find_element(By.CSS_SELECTOR, 'span.magritte-text___pbpft_3-0-47').text
-        salary_elem = vacancy.find_element(By.XPATH, './/span[contains(@class, "magritte-text___pbpft") and contains(text(), "₽")]')
-        salary = salary_elem.text
+        salary = "не указана"
+        try:
+            salary_span = vacancy.find_element(
+                By.XPATH,
+                './/span[contains(@class, "magritte-text") and contains(string(.), "₽")]'
+            )
+            salary = salary_span.text.strip()
+        except:
+            pass
         link = vacancy.find_element(By.CSS_SELECTOR, 'a.magritte-link___b4rEM_5-0-28').get_attribute('href')
     except:
         print("произошла ошибка парсинга")
@@ -29,7 +36,7 @@ for vacancy in vacancies:  #каждая отдел вакансия - in Кол
     parsed_data.append([title, company, salary, link])
 
 with open("hh.csv", "w", newline='', encoding="utf-8") as file:
-    writer = csv.writer(file)
+    writer = csv.writer(file, delimiter=';')
     writer.writerow(["Название вакансии", "название компании", "зарплата", "ссылка на вакансию"])
     writer.writerows(parsed_data)
 
