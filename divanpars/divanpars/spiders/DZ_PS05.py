@@ -1,7 +1,7 @@
 # Попробуй написать spider для нахождения всех источников освещения с сайта divan.ru
 # Нужно взять название источника освещения, цену и ссылку
-import scrapy
 
+import scrapy
 
 class DzPs05Spider(scrapy.Spider):
     name = "DZ_PS05"
@@ -17,6 +17,10 @@ class DzPs05Spider(scrapy.Spider):
                 "url": svet.css('a').attrib["href"]
             }
 
-        print(f"ВСЕГО СВЕТИЛЬНИКОВ НА СТРАНИЦЕ - {len(svets)}")
+
+
+
+
+
 
 
