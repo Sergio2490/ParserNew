@@ -23,6 +23,6 @@ class DzPs06Spider(scrapy.Spider):
 
         # записываем данные в csv
         with open("svet.csv", "w", newline='', encoding='utf-8-sig') as file:
-            writer = csv.writer(file, delimiter = ';')  #создаем объект writer. Русский Excel не понимает разделители ","
+            writer = csv.writer(file, delimiter = ';')  #создаем объект writer. Русский Excel не понимает разделители ","  по умолчанию
             writer.writerow(["Name", "Price", "Url"])
             writer.writerows(parsed_data)
